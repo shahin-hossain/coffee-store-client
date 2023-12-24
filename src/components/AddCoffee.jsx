@@ -29,6 +29,7 @@ const AddCoffee = () => {
             .then(data => {
                 console.log(data)
                 if (data.insertedId) {
+                    //sweet alert library use করা হয়েছে। alert দেয়ার জন্য।
                     Swal.fire({
                         title: 'Success!',
                         text: 'Coffee Added Successfully',
