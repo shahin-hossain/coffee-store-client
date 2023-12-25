@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
     // console.log(coffee)
     const { _id, photo, name, quantity, supplier, taste, category, details } = coffee;
 
     const handleDelete = _id => {
-
+        // ‍sweet alert for delete confirmation
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -24,17 +24,24 @@ const CoffeeCard = ({ coffee }) => {
                     .then(res => res.json())
                     .then(data => {
                         console.log(data)
+
                         if (data.deletedCount > 0) {
+
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your Coffee has been deleted.",
                                 icon: "success"
                             });
+
+                            //coffee গুলোর মধ্যে যেটা delete করা হয়েছে সেটা বাদে বাকিগুলো নিয়ে state এ coffee গুলো সেটা করা হয়েছে।
+                            const remaining = coffees.filter(coffee => coffee._id !== _id);
+                            setCoffees(remaining);
+
                         }
                     })
             }
         });
-        console.log(_id)
+
     }
     return (
         <div className="card card-side bg-base-100 shadow-xl mb-10">
